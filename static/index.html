@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPX Cleaner</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div id="toolbar">
+        <label id="upload-label" class="btn">
+            📂 Загрузить GPX
+            <input type="file" id="file-input" accept=".gpx" hidden />
+        </label>
+        <button id="btn-delete" class="btn btn-danger" disabled>🗑 Удалить выбранное</button>
+        <button id="btn-undo" class="btn" disabled>↩ Отменить</button>
+        <button id="btn-export" class="btn btn-success" disabled>💾 Экспорт</button>
+        <span id="status"></span>
+    </div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
