@@ -94,12 +94,27 @@ class GpxService:
             raise ValueError("No GPX loaded")
         tree_copy = deepcopy(self._tree)
         root = tree_copy.getroot()
-        trkpts = root.findall(f".//{{{self._ns}}}trkpt") if self._ns else root.findall(".//trkpt")
-        for idx in sorted(self._deleted, reverse=True):
-            trkpts[idx].getparent().remove(trkpts[idx])
+        tag = f"{{{self._ns}}}trkpt" if self._ns else "trkpt"
+        to_remove = []
+        for parent in root.iter():
+            for child in parent:
+                if child.tag == tag:
+                    to_remove.append((parent, child))
+        for parent, child in to_remove:
+            lat = float(child.get("lat"))
+            lon = float(child.get("lon"))
+            idx = self._find_point_index(lat, lon)
+            if idx is not None and idx in self._deleted:
+                parent.remove(child)
         buf = io.BytesIO()
         tree_copy.write(buf, xml_declaration=True, encoding="utf-8")
         return buf.getvalue()
+
+    def _find_point_index(self, lat: float, lon: float) -> Optional[int]:
+        for pt in self._points:
+            if pt["lat"] == lat and pt["lon"] == lon:
+                return pt["index"]
+        return None
 
     def _find(self, parent: ET.Element, tag: str) -> Optional[ET.Element]:
         full = f"{{{self._ns}}}{tag}" if self._ns else tag

@@ -18,6 +18,7 @@ html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Sego
 .btn-success:hover:not(:disabled) { background: #2ecc71; }
 #upload-label { display: inline-flex; align-items: center; }
 #status { margin-left: auto; font-size: 13px; color: #bdc3c7; }
+#hints { font-size: 11px; color: #7f8c8d; white-space: nowrap; }
 #map { width: 100%; height: calc(100vh - 46px); }
 
 .selection-rect {

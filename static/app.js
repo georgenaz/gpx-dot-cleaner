@@ -117,6 +117,8 @@
     mapContainer.addEventListener("mousedown", function (e) {
         if (e.button !== 0) return;
         if (e.target.closest(".leaflet-interactive")) return;
+        if (!e.shiftKey && !e.ctrlKey && !e.metaKey) return;
+        map.dragging.disable();
         isSelecting = true;
         var rect = mapContainer.getBoundingClientRect();
         selectionStartPx = { x: e.clientX, y: e.clientY };
@@ -142,6 +144,7 @@
     document.addEventListener("mouseup", function (e) {
         if (!isSelecting) return;
         isSelecting = false;
+        map.dragging.enable();
         if (selectionRect) { selectionRect.remove(); selectionRect = null; }
         if (e.button !== 0) return;
         var rect = mapContainer.getBoundingClientRect();
@@ -155,9 +158,11 @@
             if (bounds.contains(marker.getLatLng())) inRect.add(marker.pointIndex);
         });
         if (inRect.size === 0) return;
-        if (e.ctrlKey || e.metaKey) inRect.forEach(function (idx) { selectedIndices.delete(idx); });
-        else if (e.shiftKey) inRect.forEach(function (idx) { selectedIndices.add(idx); });
-        else selectedIndices = inRect;
+        if (e.ctrlKey || e.metaKey) {
+            inRect.forEach(function (idx) { selectedIndices.delete(idx); });
+        } else if (e.shiftKey) {
+            inRect.forEach(function (idx) { selectedIndices.add(idx); });
+        }
         updateMarkerStyles();
         updateSelectionButtons();
     });
