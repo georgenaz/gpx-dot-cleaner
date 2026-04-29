@@ -2,6 +2,8 @@
 
 Веб-приложение для визуальной очистки GPX-треков.
 
+**Репозиторий:** https://github.com/georgenaz/gpx-dot-cleaner
+
 ## Запуск
 
 ```bash

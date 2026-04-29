@@ -1,3 +1,8 @@
+"""GPX Cleaner — веб-приложение для визуальной очистки GPX-треков.
+
+https://github.com/georgenaz/gpx-dot-cleaner
+"""
+
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
